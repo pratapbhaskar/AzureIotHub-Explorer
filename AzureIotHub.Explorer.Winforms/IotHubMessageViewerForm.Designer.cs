@@ -28,14 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.iotHubNametext = new System.Windows.Forms.Label();
             this.startStopButton = new System.Windows.Forms.Button();
             this.messagesList = new System.Windows.Forms.ListBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -78,12 +82,29 @@
             // 
             // messagesList
             // 
+            this.messagesList.ContextMenuStrip = this.contextMenuStrip1;
             this.messagesList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.messagesList.FormattingEnabled = true;
             this.messagesList.Location = new System.Drawing.Point(0, 0);
             this.messagesList.Name = "messagesList";
+            this.messagesList.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
             this.messagesList.Size = new System.Drawing.Size(793, 391);
             this.messagesList.TabIndex = 0;
+            this.messagesList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnListBoxKeyDown);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.copyToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(103, 26);
+            // 
+            // copyToolStripMenuItem
+            // 
+            this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(102, 22);
+            this.copyToolStripMenuItem.Text = "Copy";
+            this.copyToolStripMenuItem.Click += new System.EventHandler(this.OnCopyClick);
             // 
             // IotHubMessageViewerForm
             // 
@@ -93,11 +114,13 @@
             this.Controls.Add(this.splitContainer1);
             this.Name = "IotHubMessageViewerForm";
             this.Text = "Azure IotHub Message Viewer";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -108,5 +131,7 @@
         private System.Windows.Forms.ListBox messagesList;
         private System.Windows.Forms.Button startStopButton;
         private System.Windows.Forms.Label iotHubNametext;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
     }
 }

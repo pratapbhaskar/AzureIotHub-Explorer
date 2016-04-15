@@ -9,6 +9,8 @@ namespace AzureIotHub.Explorer.Winforms
     {
         private IotHubMessageViewerForm messageViewer;
         private readonly IotHubManager iotHubManager;
+        private System.Windows.Forms.Timer timer;
+
         public AzureIotHubExplorer()
         {
             InitializeComponent();
@@ -107,6 +109,27 @@ namespace AzureIotHub.Explorer.Winforms
         {
             if (messageViewer != null)
                 messageViewer.Close();
+        }
+
+        private void OnRefreshCheckChanged(object sender, EventArgs e)
+        {
+            if (timer == null)
+            {
+                timer = new Timer();
+                timer.Interval = 60 * 1000;
+                timer.Tick += OnTimerTick;
+            }
+
+            if (this.refreshCheckbox.Checked)
+                timer.Start();
+            else
+                timer.Stop();
+                
+        }
+
+        private async void OnTimerTick(object sender, EventArgs e)
+        {
+            await RefreshDeviceListAsync();
         }
     }
 }
