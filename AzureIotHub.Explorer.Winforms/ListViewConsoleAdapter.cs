@@ -4,8 +4,8 @@ namespace AzureIotHub.Explorer.Winforms
 {
     public class ListViewConsoleAdapter : IConsoleAdapter
     {
-        private readonly ListView _listView;
-        public ListViewConsoleAdapter(ListView listView)
+        private readonly ListBox _listView;
+        public ListViewConsoleAdapter(ListBox listView)
         {
             _listView = listView;
         }

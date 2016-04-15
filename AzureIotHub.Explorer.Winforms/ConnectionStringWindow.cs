@@ -8,12 +8,12 @@ namespace AzureIotHub.Explorer.Winforms
         public ConnectionStringWindow(string connectionStringText)
         {
             InitializeComponent();
-            this.label1.Text = connectionStringText;
+            this.connectionStringLabel.Text = connectionStringText;
         }
 
         private void OnCopyToClipBoardButtonClick(object sender, EventArgs e)
         {
-            Clipboard.SetText(this.label1.Text);
+            Clipboard.SetText(this.connectionStringLabel.Text);
             MessageBox.Show("Copied to clipboard");
             this.Close();
         }

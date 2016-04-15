@@ -35,6 +35,20 @@ namespace AzureIotHub.Explorer
             }
         }
 
+        internal string GetHostName(string connectionString)
+        {
+            try
+            {
+                return IotHubConnectionStringBuilder.Create(connectionString).HostName;
+            }
+            catch (Exception)
+            {
+                return string.Empty;
+            }
+        }
+
+        public string HostName { get; set; }
+
         public bool HasBeenInitialized { get { return _initialized; } }
 
         public void Initialize(string connectionString)
@@ -44,6 +58,8 @@ namespace AzureIotHub.Explorer
             _initialized = true;
             _eventHubClient = EventHubClient.CreateFromConnectionString(_connectionString, iotHubEndPoint);
             _partitionIds = _eventHubClient.GetRuntimeInformation().PartitionIds;
+            var x = IotHubConnectionStringBuilder.Create(_connectionString);
+            HostName = x.HostName;
         }
 
         internal async Task<IEnumerable<DeviceModel>> GetDevicesAsync()
@@ -75,16 +91,33 @@ namespace AzureIotHub.Explorer
                 if (eventData == null) continue;
 
                 string data = Encoding.UTF8.GetString(eventData.GetBytes());
-                adapter.WriteLine(data);
+                adapter.WriteLine(string.Format("Partition:{0}  Message: \"{1}\"", partition, data));
             }
         }
 
         internal async Task<string> GetConnectionString(string deviceId)
         {
             var device = await _registryManager.GetDeviceAsync(deviceId);
-            var x = IotHubConnectionStringBuilder.Create(_connectionString);
-            return string.Format("{0};DeviceId={1};SharedAccessKey={1}", x.HostName, 
+            return string.Format("HostName={0};DeviceId={1};SharedAccessKey={2}", HostName, 
                 deviceId, device.Authentication.SymmetricKey.PrimaryKey);
+        }
+
+        internal async Task<DeviceModel> AddDeviceAsync(string deviceId)
+        {
+            var device = await _registryManager.AddDeviceAsync(new Device(deviceId));
+            return new DeviceModel(device);
+        }
+
+        internal async Task RemoveDeviceAsync(string deviceId)
+        {
+            await _registryManager.RemoveDeviceAsync(deviceId);
+        }
+
+        internal async Task SendCommandAsync(string deviceId, string message, Encoding encoding)
+        {
+            var serviceClient = ServiceClient.CreateFromConnectionString(_connectionString);
+            var commandMessage = new Message(encoding.GetBytes(message));
+            await serviceClient.SendAsync(deviceId, commandMessage);
         }
     }
 }

@@ -72,6 +72,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddDeviceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddDeviceForm.Designer.cs">
+      <DependentUpon>AddDeviceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AzureConnections.cs" />
     <Compile Include="AzureIotHubExplorer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -91,11 +98,27 @@
       <DependentUpon>ConnectionStringWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="DeviceModel.cs" />
+    <Compile Include="Encodings.cs" />
     <Compile Include="IConsoleAdapter.cs" />
     <Compile Include="IotHubManager.cs" />
+    <Compile Include="IotHubMessageViewerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IotHubMessageViewerForm.Designer.cs">
+      <DependentUpon>IotHubMessageViewerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ListViewConsoleAdapter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SendCommandToDeviceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SendCommandToDeviceForm.Designer.cs">
+      <DependentUpon>SendCommandToDeviceForm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="AddDeviceForm.resx">
+      <DependentUpon>AddDeviceForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AzureIotHubExplorer.resx">
       <DependentUpon>AzureIotHubExplorer.cs</DependentUpon>
     </EmbeddedResource>
@@ -104,6 +127,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ConnectionStringWindow.resx">
       <DependentUpon>ConnectionStringWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IotHubMessageViewerForm.resx">
+      <DependentUpon>IotHubMessageViewerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -114,6 +140,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="SendCommandToDeviceForm.resx">
+      <DependentUpon>SendCommandToDeviceForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\AzureIotHub.Explorer.DeviceModel.datasource" />
     <None Include="Properties\Settings.settings">
@@ -129,6 +158,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

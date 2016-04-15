@@ -1,74 +1,112 @@
 ﻿using System;
-using System.Threading;
+using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace AzureIotHub.Explorer.Winforms
 {
     public partial class AzureIotHubExplorer : Form
     {
-        private CancellationTokenSource cts = new CancellationTokenSource();
-        private bool isRuning = false;
+        private IotHubMessageViewerForm messageViewer;
+        private readonly IotHubManager iotHubManager;
         public AzureIotHubExplorer()
         {
             InitializeComponent();
+            iotHubManager = IotHubManager.Instance;
         }
 
-        private async void AzureIotHubExplorer_Load(object sender, EventArgs e)
+        private async void OnLoad(object sender, EventArgs e)
         {
-            if (!IotHubManager.Instance.HasBeenInitialized)
+            if (!iotHubManager.HasBeenInitialized)
             {
                 toolStripStatusLabel1.Text = "Connecting to Azure IotHub....";
-                var result = new Connect().ShowDialog();
+                var result = new Connect(iotHubManager).ShowDialog();
+                if (result != DialogResult.OK)
+                    this.Close();
+
                 Show();
 
-                toolStripStatusLabel1.Text = "Connected to Azure Iothub with name " ;
+                toolStripStatusLabel1.Text = "Connected to Azure Iothub with name \"" + 
+                    iotHubManager.HostName + "\"";
 
-                this.deviceModelBindingSource.DataSource = await
-                    IotHubManager.Instance.GetDevicesAsync();
-                this.dataGridView1.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
-                
+                await RefreshDeviceListAsync();
             }
         }
-        
-        private async void OnStartStopToggleButtonClick(object sender, EventArgs e)
+
+        private async Task RefreshDeviceListAsync()
         {
-            if (!isRuning)
-            {
-                isRuning = true;
-                this.button1.Text = "Stop";
-                var consoleAdapter = new ListViewConsoleAdapter(this.listView1);
-                await IotHubManager.Instance.ReceiveMessageAsync(consoleAdapter, this.cts.Token);
-            }
-            else
-            {
-                this.cts.Cancel();
-                this.button1.Text = "Start";
-            }
+            this.deviceModelBindingSource1.DataSource = await
+                    iotHubManager.GetDevicesAsync();
+            this.deviceList.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
         }
+   
 
         private void OnDataGridViewMouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
-                var hti = dataGridView1.HitTest(e.X, e.Y);
-                dataGridView1.ClearSelection();
-                dataGridView1.Rows[hti.RowIndex].Selected = true;
+                var hti = deviceList.HitTest(e.X, e.Y);
+                deviceList.ClearSelection();
+                deviceList.Rows[hti.RowIndex].Selected = true;
             }
         }
 
 
         private async void OnGenerateConnectionStringClick(object sender, EventArgs e)
         {
-            var selectedRow = dataGridView1.Rows.GetFirstRow(DataGridViewElementStates.Selected);
-            var deviceId = dataGridView1.Rows[selectedRow].Cells["idColumn"].Value.ToString();
-
-            var connectionStringWindow = new ConnectionStringWindow(await IotHubManager.Instance.GetConnectionString(deviceId));
-            connectionStringWindow.ShowDialog();
+            using (var connectionStringWindow = new ConnectionStringWindow
+                (await iotHubManager.GetConnectionString(GetSelectedDeviceId())))
+            {
+                connectionStringWindow.ShowDialog();
+            }
         }
 
-        private void OnAddDeviceClick(object sender, EventArgs e)
+        private async void OnAddDeviceClick(object sender, EventArgs e)
         {
-            
+            using(var addDeviceForm = new AddDeviceForm(iotHubManager))
+            {
+                addDeviceForm.ShowDialog();
+                await RefreshDeviceListAsync();   
+            }
+        }
+
+        private async void OnRemoveDeviceClick(object sender, EventArgs e)
+        {
+            await iotHubManager.RemoveDeviceAsync(GetSelectedDeviceId());
+        }
+
+        private string GetSelectedDeviceId()
+        {
+            var selectedRow = deviceList.Rows.GetFirstRow(DataGridViewElementStates.Selected);
+            return deviceList.Rows[selectedRow].Cells["idDataGridViewTextBoxColumn"].Value.ToString();
+        }
+
+        private async void OnSendCommandToDevice(object sender, EventArgs e)
+        {
+            using(var sendCommand = new SendCommandToDeviceForm(GetSelectedDeviceId()))
+            {
+                await sendCommand.Initialize();
+                sendCommand.ShowDialog();
+            }
+        }
+
+        private void OnOpenMessageViewerButtonClick(object sender, EventArgs e)
+        {
+            if(messageViewer == null)
+            {
+                messageViewer = new IotHubMessageViewerForm(iotHubManager);
+                messageViewer.Show();
+            }
+            else
+            {
+                messageViewer.Show();
+            }
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            if (messageViewer != null)
+                messageViewer.Close();
         }
     }
 }

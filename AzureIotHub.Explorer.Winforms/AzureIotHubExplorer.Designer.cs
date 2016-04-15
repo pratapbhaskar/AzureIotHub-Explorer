@@ -32,34 +32,31 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.DevicesTab = new System.Windows.Forms.TabPage();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.idColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.statusDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ConnectionState = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CToDMessageCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.LastActivityTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.deviceList = new System.Windows.Forms.DataGridView();
             this.datagridviewContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.generateConnectionString = new System.Windows.Forms.ToolStripMenuItem();
             this.addDevice = new System.Windows.Forms.ToolStripMenuItem();
             this.removeDevice = new System.Windows.Forms.ToolStripMenuItem();
+            this.sendCommandToDeviceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deviceModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.MessagesTab = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.button1 = new System.Windows.Forms.Button();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.openMessageViewerButton = new System.Windows.Forms.Button();
+            this.deviceModelBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.statusStrip1.SuspendLayout();
-            this.tabControl1.SuspendLayout();
-            this.DevicesTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.deviceList)).BeginInit();
             this.datagridviewContextMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.deviceModelBindingSource)).BeginInit();
-            this.MessagesTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.deviceModelBindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -78,40 +75,19 @@
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
             this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
             // 
-            // tabControl1
+            // deviceList
             // 
-            this.tabControl1.Controls.Add(this.DevicesTab);
-            this.tabControl1.Controls.Add(this.MessagesTab);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(755, 475);
-            this.tabControl1.TabIndex = 1;
-            // 
-            // DevicesTab
-            // 
-            this.DevicesTab.Controls.Add(this.dataGridView1);
-            this.DevicesTab.Location = new System.Drawing.Point(4, 22);
-            this.DevicesTab.Name = "DevicesTab";
-            this.DevicesTab.Padding = new System.Windows.Forms.Padding(3);
-            this.DevicesTab.Size = new System.Drawing.Size(747, 449);
-            this.DevicesTab.TabIndex = 0;
-            this.DevicesTab.Text = "Devices";
-            this.DevicesTab.UseVisualStyleBackColor = true;
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.AutoGenerateColumns = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.idColumn,
-            this.statusDataGridViewTextBoxColumn,
-            this.ConnectionState,
-            this.CToDMessageCount,
-            this.LastActivityTime});
-            this.dataGridView1.ContextMenuStrip = this.datagridviewContextMenu;
-            this.dataGridView1.DataSource = this.deviceModelBindingSource;
+            this.deviceList.AllowUserToDeleteRows = false;
+            this.deviceList.AutoGenerateColumns = false;
+            this.deviceList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.deviceList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.idDataGridViewTextBoxColumn,
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn2,
+            this.dataGridViewTextBoxColumn3,
+            this.dataGridViewTextBoxColumn4});
+            this.deviceList.ContextMenuStrip = this.datagridviewContextMenu;
+            this.deviceList.DataSource = this.deviceModelBindingSource1;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -119,50 +95,21 @@
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle1;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(3, 3);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(741, 443);
-            this.dataGridView1.TabIndex = 0;
-            // 
-            // idColumn
-            // 
-            this.idColumn.DataPropertyName = "Id";
-            this.idColumn.HeaderText = "Id";
-            this.idColumn.Name = "idColumn";
-            // 
-            // statusDataGridViewTextBoxColumn
-            // 
-            this.statusDataGridViewTextBoxColumn.DataPropertyName = "Status";
-            this.statusDataGridViewTextBoxColumn.HeaderText = "Status";
-            this.statusDataGridViewTextBoxColumn.Name = "statusDataGridViewTextBoxColumn";
-            // 
-            // ConnectionState
-            // 
-            this.ConnectionState.DataPropertyName = "ConnectionState";
-            this.ConnectionState.HeaderText = "Connection State";
-            this.ConnectionState.Name = "ConnectionState";
-            // 
-            // CToDMessageCount
-            // 
-            this.CToDMessageCount.DataPropertyName = "CToDMessageCount";
-            this.CToDMessageCount.HeaderText = "C To D MessageCount";
-            this.CToDMessageCount.Name = "CToDMessageCount";
-            // 
-            // LastActivityTime
-            // 
-            this.LastActivityTime.DataPropertyName = "LastActivityTime";
-            this.LastActivityTime.HeaderText = "Last Activity Time";
-            this.LastActivityTime.Name = "LastActivityTime";
+            this.deviceList.DefaultCellStyle = dataGridViewCellStyle1;
+            this.deviceList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.deviceList.Location = new System.Drawing.Point(0, 0);
+            this.deviceList.Name = "deviceList";
+            this.deviceList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.deviceList.Size = new System.Drawing.Size(755, 432);
+            this.deviceList.TabIndex = 0;
             // 
             // datagridviewContextMenu
             // 
             this.datagridviewContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.generateConnectionString,
             this.addDevice,
-            this.removeDevice});
+            this.removeDevice,
+            this.sendCommandToDeviceToolStripMenuItem});
             this.datagridviewContextMenu.Name = "datagridviewContextMenu";
             this.datagridviewContextMenu.Size = new System.Drawing.Size(221, 92);
             // 
@@ -178,89 +125,117 @@
             this.addDevice.Name = "addDevice";
             this.addDevice.Size = new System.Drawing.Size(220, 22);
             this.addDevice.Text = "Add Device";
-            this.addDevice.Click += new System.EventHandler(this.addDevice_Click);
+            this.addDevice.Click += new System.EventHandler(this.OnAddDeviceClick);
             // 
             // removeDevice
             // 
             this.removeDevice.Name = "removeDevice";
             this.removeDevice.Size = new System.Drawing.Size(220, 22);
             this.removeDevice.Text = "Remove Device";
+            this.removeDevice.Click += new System.EventHandler(this.OnRemoveDeviceClick);
             // 
-            // deviceModelBindingSource
+            // sendCommandToDeviceToolStripMenuItem
             // 
-            this.deviceModelBindingSource.DataSource = typeof(AzureIotHub.Explorer.DeviceModel);
-            // 
-            // MessagesTab
-            // 
-            this.MessagesTab.Controls.Add(this.splitContainer1);
-            this.MessagesTab.Location = new System.Drawing.Point(4, 22);
-            this.MessagesTab.Name = "MessagesTab";
-            this.MessagesTab.Padding = new System.Windows.Forms.Padding(3);
-            this.MessagesTab.Size = new System.Drawing.Size(747, 449);
-            this.MessagesTab.TabIndex = 1;
-            this.MessagesTab.Text = "Messages";
-            this.MessagesTab.UseVisualStyleBackColor = true;
+            this.sendCommandToDeviceToolStripMenuItem.Name = "sendCommandToDeviceToolStripMenuItem";
+            this.sendCommandToDeviceToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+            this.sendCommandToDeviceToolStripMenuItem.Text = "Send Command To Device";
+            this.sendCommandToDeviceToolStripMenuItem.Click += new System.EventHandler(this.OnSendCommandToDevice);
             // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.splitContainer1.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.button1);
+            this.splitContainer1.Panel1.Controls.Add(this.checkBox1);
+            this.splitContainer1.Panel1.Controls.Add(this.openMessageViewerButton);
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.listView1);
-            this.splitContainer1.Size = new System.Drawing.Size(741, 443);
-            this.splitContainer1.SplitterDistance = 44;
-            this.splitContainer1.TabIndex = 0;
+            this.splitContainer1.Panel2.Controls.Add(this.deviceList);
+            this.splitContainer1.Size = new System.Drawing.Size(755, 475);
+            this.splitContainer1.SplitterDistance = 39;
+            this.splitContainer1.TabIndex = 1;
             // 
-            // button1
+            // checkBox1
             // 
-            this.button1.Location = new System.Drawing.Point(5, 9);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Start";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.OnStartStopToggleButtonClick);
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(637, 12);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(106, 17);
+            this.checkBox1.TabIndex = 1;
+            this.checkBox1.Text = "refresh every min";
+            this.checkBox1.UseVisualStyleBackColor = true;
             // 
-            // listView1
+            // openMessageViewerButton
             // 
-            this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView1.Location = new System.Drawing.Point(0, 0);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(741, 395);
-            this.listView1.TabIndex = 0;
-            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.openMessageViewerButton.Location = new System.Drawing.Point(12, 8);
+            this.openMessageViewerButton.Name = "openMessageViewerButton";
+            this.openMessageViewerButton.Size = new System.Drawing.Size(135, 23);
+            this.openMessageViewerButton.TabIndex = 0;
+            this.openMessageViewerButton.Text = "Open Message Viewer";
+            this.openMessageViewerButton.UseVisualStyleBackColor = true;
+            this.openMessageViewerButton.Click += new System.EventHandler(this.OnOpenMessageViewerButtonClick);
+            // 
+            // deviceModelBindingSource1
+            // 
+            this.deviceModelBindingSource1.DataSource = typeof(AzureIotHub.Explorer.DeviceModel);
+            // 
+            // idDataGridViewTextBoxColumn
+            // 
+            this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
+            this.idDataGridViewTextBoxColumn.HeaderText = "Id";
+            this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.DataPropertyName = "Status";
+            this.dataGridViewTextBoxColumn1.HeaderText = "Status";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.DataPropertyName = "LastActivityTime";
+            this.dataGridViewTextBoxColumn2.HeaderText = "Last Activity Time";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.DataPropertyName = "CToDMessageCount";
+            this.dataGridViewTextBoxColumn3.HeaderText = "C To D Message Count";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.DataPropertyName = "ConnectionState";
+            this.dataGridViewTextBoxColumn4.HeaderText = "Connection State";
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             // 
             // AzureIotHubExplorer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(755, 497);
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.statusStrip1);
             this.Name = "AzureIotHubExplorer";
-            this.Text = "Form1";
-            this.Load += new System.EventHandler(this.AzureIotHubExplorer_Load);
+            this.Text = "Azure Iot Hub Explorer";
+            this.Load += new System.EventHandler(this.OnLoad);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            this.tabControl1.ResumeLayout(false);
-            this.DevicesTab.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.deviceList)).EndInit();
             this.datagridviewContextMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.deviceModelBindingSource)).EndInit();
-            this.MessagesTab.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.deviceModelBindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -270,26 +245,27 @@
 
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage DevicesTab;
-        private System.Windows.Forms.TabPage MessagesTab;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView deviceList;
         private System.Windows.Forms.BindingSource deviceModelBindingSource;
         private System.Windows.Forms.DataGridViewTextBoxColumn lastActivityTimeDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn cToDMessageCountDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn connectionStateDataGridViewTextBoxColumn;
-        private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.ContextMenuStrip datagridviewContextMenu;
         private System.Windows.Forms.ToolStripMenuItem generateConnectionString;
         private System.Windows.Forms.ToolStripMenuItem addDevice;
         private System.Windows.Forms.ToolStripMenuItem removeDevice;
         private System.Windows.Forms.DataGridViewTextBoxColumn idColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn statusDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ConnectionState;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CToDMessageCount;
-        private System.Windows.Forms.DataGridViewTextBoxColumn LastActivityTime;
+        private System.Windows.Forms.ToolStripMenuItem sendCommandToDeviceToolStripMenuItem;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.Button openMessageViewerButton;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private System.Windows.Forms.BindingSource deviceModelBindingSource1;
     }
 }
 
