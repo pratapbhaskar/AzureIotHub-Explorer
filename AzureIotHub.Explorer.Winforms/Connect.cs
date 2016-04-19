@@ -31,7 +31,6 @@ namespace AzureIotHub.Explorer.Winforms
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                this.DialogResult = DialogResult.No;
             }
         }
 

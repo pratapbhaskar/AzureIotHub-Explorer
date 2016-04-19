@@ -24,8 +24,9 @@ namespace AzureIotHub.Explorer.Winforms
                 toolStripStatusLabel1.Text = "Connecting to Azure IotHub....";
                 var result = new Connect(iotHubManager).ShowDialog();
                 if (result != DialogResult.OK)
-                    this.Close();
-
+                {
+                    System.Environment.Exit(1);
+                }
                 Show();
 
                 toolStripStatusLabel1.Text = "Connected to Azure Iothub with name \"" + 
@@ -129,7 +130,9 @@ namespace AzureIotHub.Explorer.Winforms
 
         private async void OnTimerTick(object sender, EventArgs e)
         {
+            this.Cursor = Cursors.WaitCursor;
             await RefreshDeviceListAsync();
+            this.Cursor = Cursors.Default;
         }
     }
 }
